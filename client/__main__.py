@@ -20,7 +20,6 @@ def fileSize(root,fileName):
 def list_files(path):
     width=20
     count=0
-    data={}
     print("files in the Directory: "+path)
     print("{}|{}| {}| {}| {}".format("#".ljust(3),"File_name".ljust(10),"File_path".ljust(width),"File_size".ljust(width),"File_extension".ljust(width)))
     print("-----------------------------------------------------------------------------------------------------------")
@@ -38,7 +37,7 @@ def list_files(path):
             # print("Extension:"+e)
             print("{}|{}| {}| {}| {}".format(str(count).ljust(5),file.ljust(20),p.ljust(width),s.ljust(width),e.ljust(width)))
             data[file]=[p,s,e]
-   
+        return data
 def options():
     msg="Command Line Interfce for Traversing file system"
     print("****************************************************")
@@ -49,6 +48,8 @@ def options():
 #main code
 def main():
     try:
+        global data
+    	data={}
     	qry=[]
     	for i in sys.argv:
         	qry.append(i)
@@ -56,13 +57,13 @@ def main():
         	options()
     	else:
         	data=list_files(qry[-1])
-        	print(data)
+#         	print(data)
     except:
     	print("Directory not found")
     app.run(debug=True)
 
-@app.route('/',methods=['POST'])
-def getInfo():
-    return jsonify(data)
 if __name__ == '__main__':
     main()
+@app.route('/',methods=['POST'])
+def getInfo():
+    return jsonify(data)  
